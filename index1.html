@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单个插槽</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+</head>
+
+<body>
+    <div id="root">
+        <!-- <child content="<p>推荐</p>"></child> -->
+        <child>
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+        </child>
+    </div>
+
+    <script type="text/javascript">
+        // <slot></slot>  内容分发的出口
+        /**
+         * 插槽的作用：
+         *  1. 往子组件中传dom结构
+         */
+        // slot内可以设置默认值，不传的话显示默认值
+
+        Vue.component('child', {
+            props: ['content'],
+            template: `<div>
+                   <p>书籍A</p>
+                   <slot><p>新品</p></slot>
+                </div>`
+        })
+
+        var vm = new Vue({
+            el: '#root',
+        })
+    </script>
+</body>
+
+</html>
