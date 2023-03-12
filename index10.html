@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>局部组件写todolist 父传子 子传父</title>
+    <script type="text/javascript" src="./vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <input type="text" v-model="inputValue">
+        <button @click="addItem">添加项目</button>
+        <ul>
+            <todo-item :content="item" 
+                       :index="index" 
+                       v-for="(item, index) in content" :key="index"
+                       @delete="handleItemDelete"
+            >
+
+            </todo-item>
+        </ul>
+    </div>
+    <!-- target.addEventListener('click', function(e){}, false) -->
+    <script type="text/javascript">
+        var TodoItem = {
+            props: ['content', 'index'],
+            template: `<div>
+                          <li @click="handleItemClick">{{content}}{{index}}</li>
+                       </div>`,
+            methods: {
+                handleItemClick() {
+                    // $emit向外触发自定义事件
+                    // 在这里是向外触发delete事件
+                    // 父组件上进行监听
+                    // $emit方法的第二个参数，就能相父组件上的回调函数进行传值
+                    this.$emit("delete", this.index)
+                },
+            },
+        }
+
+        var vm = new Vue({
+            el: "#root",
+            components: {
+                "todo-item": TodoItem,
+            },
+            data: {
+                inputValue: "",
+                content: ['国足白斩鸡', '我想成为牛逼的工程师']
+            },
+            methods: {
+                addItem() {
+                    var cont = this.inputValue;
+                    if(cont === ''){
+                        alert('需要输入内容')
+                    }else {
+                        this.content.push(cont);
+                        this.inputValue = ''
+                    }
+                },
+                handleItemDelete(index) {
+                    // console.log(index);
+                    this.content.splice(index, 1);
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

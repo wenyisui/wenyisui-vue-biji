@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>class绑定 style绑定 条件渲染</title>
+    <script type="text/javascript" src="./vue.js"></script>
+    <style type="text/css">
+        .active {
+            color: red;
+        }
+        .btn-lg {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+     <div id="root">
+        <!-- 1. class字符串拼接的方式,一般不用 -->
+        <!-- <span :class="'active'">我是一个span</span> -->
+
+
+        <!-- 2. class对象的写法 -->
+        <!-- <span :class="{active: isActive}">我是一个span</span> -->
+        <!-- 2.1 class对象的写法 -->
+        <!-- <span :class="classObj">我是一个span</span> -->
+        <!-- <button class="if-btn"
+                :class="{active: isActive, 'btn-lg': isBig}"
+        >
+           success
+        </button> -->
+
+
+        <!-- class数组的写法 -->
+        <!-- <button class="if-btn"
+                :class="[activeClass, btnClass]"
+        >
+           success
+       </button> -->
+
+       
+       <!-- style的写法 -->
+       
+       <!-- 对象写法 -->
+       <!-- <span :style="{color:'red', 'font-size': '20px'}">我是一个span</span> -->
+       <!-- <span :style="styleObj">我是一个span</span> -->
+
+       <!-- 数组写法 -->
+       <span :style="[baseStyle, additionalStyles]">这是一段文字</span>
+     </div>
+
+     <script type="text/javascript">
+        var vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    // style内联样式
+                    styleObj: {
+                       color: 'red',
+                       'font-size': '20px'
+                    },
+                    isActive: true,
+                    isBig: true,
+                    // 数组写法
+                    activeClass: 'active',
+                    btnClass: 'btn-lg',
+                    classObj: {
+                        active: true,
+                    },
+                    baseStyle: {
+                        color: 'red',
+                        "font-size": '20px'
+                    },
+                    additionalStyles: {
+                        textShadow: '0 0 3px yellow'
+                    }
+                }
+            },
+        })
+     </script>
+  
+
+</body>
+</html>

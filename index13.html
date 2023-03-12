@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>computed methods watch</title>
+    <script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">
+         <!--methods方法和compouted属性  -->
+         <!-- <p>我是计算前的数据：{{message}}-----{{author}}</p>
+         <p>我是计算后的数据{{reversedMessage}}</p>  -->
+
+         {{fullName}}--{{age}}
+    </div>
+
+    <script type="text/javascript">
+        var vm = new Vue ({
+            el: '#root',
+            data() {
+                return {
+                    message: '大家好，我是小猪佩奇',
+                    author: '鲁迅先生',
+                    firstName: '三',
+                    lastName: '张',
+                    // fullName: '张三',
+                    age: 28
+                }
+            },
+            // 方法
+            // methods里面定义的方法，在页面重新渲染的时候，它都会执行这个方法
+            methods: {
+                reversedMessage () {
+                    console.log('调用并执行了一次');
+                    return this.message.split('').reverse().join('');
+                },
+            },
+
+            // 计算属性的getter函数
+            // computed它里面对应的数据改变时才执行
+            computed: {
+                // reversedMessage () {
+                //     console.log('计算了一次');
+                //     return this.message.split('').reverse().join('');
+                // },
+                //  有get必须有set不然会报错
+                fullName: {
+                    get: function () {
+                        return this.lastName + this.firstName;
+                    },
+                    set: function (value) {
+                       var arr = value.split("");
+                       console.log(arr);
+                       this.firstName = arr[0];
+                       this.lastName = arr[1];                          
+                    }
+                }
+            },
+
+            // 侦听属性
+            // watch也有相对应的缓存机制的,只有改变它相对应的值的时候,它才会进行相对应的修改,
+            // 相对应的值和之前一样的话它就不执行了
+            // watch: {
+            //     firstName: function(){
+            //         console.log('计算了一次');
+            //         this.fullName = this.firstName + this.lastName
+            //     },
+            //     lastName: function() {
+            //         console.log('计算了一次');
+            //         this.fullName = this.firstName + this.lastName
+            //     }
+            // },
+        })
+    </script>
+</body>
+</html>

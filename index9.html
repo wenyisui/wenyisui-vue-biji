@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>局部注册</title>
+    <script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <ul>
+            <li v-for="(item, index) in list" :key="index">{{item}}</li>
+            <jiehunzheng content="我是传进来的一个静态的值"></jiehunzheng>
+            <todo-item></todo-item>
+            <on-san></on-san>
+        </ul>
+    </div>
+  
+    <script type="text/javascript">
+        var mingzi = {
+            props: ['content'],
+            template: "<h1>{{content}}</h1>"
+        }
+
+        var test = {
+            template: "<p>我想成为牛逼的前端开发工程师</p>"
+        }
+
+        var onosan = {
+            template: "<p>我是最棒的</p>"
+        }
+
+        var vm = new Vue ({
+            el: '#root',
+            components: {
+                "jiehunzheng": mingzi,
+                "todo-item": test,
+                "on-san": onosan
+            },
+            data: {
+                inputValue: '',
+                list:['国足白斩鸡','表白小狐狸','今天是个好日子']
+            },
+            methods: {
+                handleBtnClick() {
+                    this.list.push(this.inputValue);
+                    this.inputValue = '';
+                },
+            },
+        })
+    </script>
+</body>
+</html>
