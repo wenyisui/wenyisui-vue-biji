@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表渲染 数组更新检测变异方法 Vue.set全局方法</title>
+    <script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 
+            key值的作用：给每个节点一个身份，vue就会去追踪每个节点相对应的身份
+         -->
+         <!-- <div v-if="show">
+             username: <input type="text" />
+         </div>
+         <div v-else>
+             email: <input type="text"/>
+         </div> -->
+
+         <!-- <div v-for="(item, index) in list" :key="item.id">{{item.text}}--{{index}}</div> -->
+         
+         <!-- 
+            push() 往数组里增加一条
+            pop() 把数组最后一项删除
+            shift() 把数组第一项删除掉
+            unshift() 把数组第一像添加一点内容
+            split() 做数组的截取
+            splice() 替换
+            sort() 对数组进行排序
+            reverse() 对数组进行取反
+          -->
+          
+          
+          <!-- 
+            数组更新的三种方法
+           -->
+           <!-- 第一种 -->
+          <!-- 
+            全局方法
+            Vue.set(vm.items, indexOf(item), newValue);
+           -->
+           <!-- 
+            实例方法
+            Vue.$set(vm.items, indexOf(item), newValue);
+            -->
+            <!-- 第二种 -->
+            <!-- 
+                spilce方法
+            vm.list.splice(4, 0, {id: '32545476', text: '加油'})
+             -->
+             <!-- 第三种 -->
+             <!-- 
+                直接更改引用值
+              -->
+
+            <!-- vue上的is属性 -->
+            <table>
+                <tbody>
+                    <!-- <row></row>
+                    <row></row>
+                    <row></row> dom结构tr会跑到table外面可以使用is特性帮我们解决-->
+                    <tr is="row"></tr>
+                    <tr is="row"></tr>
+                    <tr is="row"></tr>
+                </tbody>
+            </table>
+         
+    </div>
+
+    <script type="text/javascript">
+        Vue.component('row', {
+            data() {
+                return {
+                    // content: 'this is row'
+                    count: 0,
+                }
+            },
+            // template: '<tr><td>{{content}}</td></tr>'
+            template: '<button @click="handleBtnClick">点击了{{count}}次</button>',
+            methods: {
+                handleBtnClick() {
+                    this.count = this.count + 1;  
+                },
+            },
+        })
+        var vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    show: false,
+                    list: [{
+                        id: '01011',
+                        text: 'See'
+                    },{
+                        id: '01012',
+                        text: 'You'
+                    },{
+                        id: '01013',
+                        text: 'Tomorrow'
+                    }]
+                }
+            },
+        })
+    </script>
+</body>
+</html>
