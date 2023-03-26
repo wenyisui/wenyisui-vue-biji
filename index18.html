@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>props</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 父组件给子组件静态传值 -->
+        <button-counter count="0"></button-counter>
+        <button-counter count="1"></button-counter>
+    </div>
+    <script type="text/javascript">
+        Vue.component('button-counter', {
+            data() {
+                return {
+                    number: this.count,  // 在子组件中不能直接修改父组件传过来的值，需要在data里进行接收，然后修改
+                }
+            },
+            props: ['count'],
+            template: `<button @click="handleBtnClick">{{number}}</button>`,
+            methods: {
+                handleBtnClick() {
+                    this.number ++;
+                },
+            },
+        })
+        var vm = new Vue({
+            el: '#root',
+        })
+    </script>
+</body>
+</html>

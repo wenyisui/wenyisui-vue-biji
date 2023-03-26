@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>props特性和非props特性</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+    <div id="root">
+       <child content="123456"></child>
+    </div>
+    <script type="text/javascript">
+       Vue.component('child', {
+        // props特性   特点组件根元素不会去接收传过来的content属性
+        // 非props特性<div content="123456"><p></p></div> 根组件会接收，会在根组件上继承我们传过来的属性，一般在设计组件库中使用
+         props: ['content'],
+         template: `<div>
+                      <p>{{content}}
+                      </p>
+                    </div>`
+       })
+       var vm = new Vue({
+         el: '#root',
+       })
+    </script>
+</body>
+</html>

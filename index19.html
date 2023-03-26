@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>props传值检验</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+    <div id="root">
+       <child :content="'123456'"></child>
+       <child></child>
+    </div>
+    <script type="text/javascript">
+       Vue.component('child', {
+          props: {
+            //  content: [String, Number], // 验证多个可能要求
+            //  content: {
+            //     type: [String, Number],
+            //     required: false,
+            //     default: '我是一段默认值'
+            //  } // type传值类型 required true必传 false非必传
+            content: {
+                validator: function(value) {
+                    // return (value.length > 5)
+                    return ['success','123456',123].indexOf(value)!==-1;
+                },  // validator检验器  自定义验证器验证props
+            }
+          },
+          template: `<div>{{content}}</div>`
+       })
+       var vm = new Vue({
+         el: '#root',
+       })
+    </script>
+</body>
+</html>

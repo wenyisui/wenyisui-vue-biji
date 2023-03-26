@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>非父子组件传值</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <child content="Hello"></child>
+        <child content="Bye"></child>
+        <!-- <child></child>
+        <test></test> -->
+    </div>
+    <script type="text/javascript">
+        // $bus属性放在Vue实例上
+        Vue.prototype.$bus = new Vue();                                                    
+
+        Vue.component('child', {
+            data() {
+                return {
+                    selfContent: this.content
+                }
+            },
+            props: ['content'],
+            template: `<div @click="handleClick">{{selfContent}}</div>`,
+            methods: {
+                handleClick: function(){
+                    // 一个组件就是一个实例对象
+                    // 向外触发change事件，这个事件携带了this,content值
+                    this.$bus.$emit('change', this.selfContent);
+                }
+            },
+            mounted() {
+                // 作用域发生变化了，用这种方式保存
+                let that = this;
+                // 每个子组件上它都对同一个自定义事件进行监听
+                that.$bus.$on('change', function(value) {
+                    // console.log(value);
+                    that.selfContent = value;
+                })
+            },
+        })
+        Vue.component('test', {
+            template: `<div>test</div>`
+        })
+        var vm = new Vue({
+            el: '#root',
+        })
+    </script>
+</body>
+</html>
